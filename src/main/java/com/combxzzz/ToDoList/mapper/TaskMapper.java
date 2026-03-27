@@ -1,10 +1,11 @@
 package com.combxzzz.ToDoList.mapper;
 
+import com.combxzzz.ToDoList.dto.task.TaskRequestDTO;
 import com.combxzzz.ToDoList.dto.task.TaskResponseDTO;
 import com.combxzzz.ToDoList.entity.Task;
 
 public class TaskMapper {
-    public static TaskResponseDTO toResponseDTO(Task task) {
+    public static TaskResponseDTO toDTO(Task task) {
         return new TaskResponseDTO(
                 task.getId(),
                 task.getTitle(),
@@ -15,10 +16,10 @@ public class TaskMapper {
         );
     }
 
-    public static Task toEntity(String title, String description) {
+    public static Task toEntity(TaskRequestDTO dto) {
         return Task.builder()
-                .title(title)
-                .description(description)
+                .title(dto.title())
+                .description(dto.description())
                 .build();
     }
 }
