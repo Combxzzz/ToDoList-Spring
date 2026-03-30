@@ -35,9 +35,11 @@ public class TaskController {
         return ResponseEntity.ok(service.findById(id));
     }
 
-    @PutMapping("/{id}")
-    public ResponseEntity<TaskResponseDTO> update(@PathVariable Long id,
-                                                  @RequestBody @Valid TaskRequestDTO dto) {
+    @PatchMapping("/{id}")
+    public ResponseEntity<TaskResponseDTO> update(
+            @PathVariable Long id,
+            @RequestBody TaskRequestDTO dto
+    ) {
         return ResponseEntity.ok(service.update(id, dto));
     }
 

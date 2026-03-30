@@ -41,8 +41,14 @@ public class TaskService {
         Task task = taskRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Task not Found"));
 
-        task.setTitle(dto.title());
-        task.setDescription(dto.description());
+        if (dto.title() != null) {
+            if (dto.title().isBlank()) throw new RuntimeException("Title cannot be empty");
+            task.setTitle(dto.title());
+        }
+
+        if (dto.description() != null) {
+            task.setDescription(dto.description());
+        }
 
         Task updated = taskRepository.save(task);
         return TaskMapper.toDTO(updated);
