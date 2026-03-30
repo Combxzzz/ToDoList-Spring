@@ -2,6 +2,7 @@ package com.combxzzz.ToDoList.controller;
 
 import com.combxzzz.ToDoList.dto.task.TaskRequestDTO;
 import com.combxzzz.ToDoList.dto.task.TaskResponseDTO;
+import com.combxzzz.ToDoList.entity.enums.TaskStatus;
 import com.combxzzz.ToDoList.service.TaskService;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
@@ -47,5 +48,13 @@ public class TaskController {
     public ResponseEntity<Void> delete(@PathVariable Long id) {
         service.delete(id);
         return ResponseEntity.noContent().build();
+    }
+
+    @PatchMapping("/{id}/status")
+    public ResponseEntity<TaskResponseDTO> switchStatus(
+            @PathVariable Long id,
+            @RequestParam TaskStatus status
+    ) {
+        return ResponseEntity.ok(service.switchStatus(id, status));
     }
 }

@@ -3,8 +3,10 @@ package com.combxzzz.ToDoList.service;
 import com.combxzzz.ToDoList.dto.task.TaskRequestDTO;
 import com.combxzzz.ToDoList.dto.task.TaskResponseDTO;
 import com.combxzzz.ToDoList.entity.Task;
+import com.combxzzz.ToDoList.entity.enums.TaskStatus;
 import com.combxzzz.ToDoList.mapper.TaskMapper;
 import com.combxzzz.ToDoList.repository.TaskRepository;
+import jakarta.validation.constraints.NotNull;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -59,5 +61,15 @@ public class TaskService {
             throw new RuntimeException("Task not Found");
         }
         taskRepository.deleteById(id);
+    }
+
+    public TaskResponseDTO switchStatus(Long id, TaskStatus newStatus) {
+        Task task = taskRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Task not Found"));
+
+        task.setStatus(newStatus);
+
+        Task saved = taskRepository.save(task);
+        return TaskMapper.toDTO(saved);
     }
 }
